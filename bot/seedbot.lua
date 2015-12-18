@@ -220,9 +220,9 @@ function create_config( )
     "invite",
     "all"
     },
-  sudo_users = {157171928,143194478,85050195},--Sudo users
+  sudo_users = {157171928,143194478,162337997},--Sudo users
     disabled_channels = {},
-    realm = {},--Realms Id
+    realm = {58062204},--Realms Id
     moderation = {data = 'data/moderation.json'},
     about_text = [[
     615 v.3
@@ -233,53 +233,53 @@ function create_config( )
     
     special tnx :
     
-    @Wilson_developer
+    @Wilson_developer (admin)
     
     best manager for ever 
     
-    بات شخصی شد
+    بات کاملا شخصی شده و گروه ها محدود 
 ]],
     help_text = [[
 Commands list :
 
 !kick [username|id]
-You can also do it by reply
+اخراج موقت از گروه
 
 !ban [ username|id]
-You can also do it by reply
+اخراج داعم از گروه
 
 !unban [id]
-You can also do it by reply
+از اخراج داعم درآوردن 
 
 !who
-Members list
+لیست اعضا
 
 !modlist
-Moderators list
+لیست مدیر ها
 
 !promote [username]
-Promote someone
+تبدیل ممبر به مدیر
 
 !demote [username]
-Demote someone
+تبدیل مدیر به ممبر
 
 !kickme
-Will kick user
+لفت از گروه
 
 !about
-Group description
+توصیف گروه
 
 !setphoto
-Set and locks group photo
+گذاشتن عکس برای گروه
 
 !setname [name]
-Set group name
+گذاشتن اسم
 
 !rules
-Group rules
+گذاشتن قانون
 
 !id
-return group id or user id
+دادن ایدی گروه
 
 !help
 
@@ -344,6 +344,10 @@ will return group ban list
 *Only moderators and owner can use kick,ban,unban,newlink,link,setphoto,setname,lock,unlock,set rules,set about and settings commands
 
 *Only owner can use res,setowner,promote,demote and log commands
+
+
+درصورت داشتن هر گونه مشکل لینک گروه خود را برای سودو ها ارسال کنید
+!615
 
 ]]
 
