@@ -107,10 +107,10 @@ local function username_id(cb_extra, success, result)
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
-      elseif get_cmd == 'kolansik' then
+      elseif get_cmd == 'kolansiktir' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned')
         return banall_user(member_id, chat_id)
-      elseif get_cmd == 'bakhshesh' then
+      elseif get_cmd == 'gohkhord' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
         return unbanall_user(member_id, chat_id)
       end
@@ -270,7 +270,7 @@ local function run(msg, matches)
       end
     end
   end
-  if matches[1]:lower() == 'bakhshesh' then -- Global unban
+  if matches[1]:lower() == 'gohkhord' then -- Global unban
     local user_id = matches[2]
     local chat_id = msg.to.id
     if msg.to.type == 'chat' then
@@ -282,7 +282,7 @@ local function run(msg, matches)
         return 'User ['..user_id..' ] removed from global ban list'
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'bakhshesh'
+        local get_cmd = 'gohkhord'
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
       end
     end
@@ -302,8 +302,8 @@ return {
     "^[!/]([Ss]iktir) (.*)$",
     "^[!/]([Ss]ik)$",
     "^[!/]([Uu]nsiktir) (.*)$",
-    "^[!/]([Bb]akhshesh) (.*)$",
-    "^[!/]([Bb]akhshesh)$",
+    "^[!/]([Gg]ohkhord) (.*)$",
+    "^[!/]([Gg]ohkhord)$",
     "^[!/]([Ss]ik) (.*)$",
     "^[!/]([Ss]ikme)$",
     "^[!/]([Ss]iktir)$",
