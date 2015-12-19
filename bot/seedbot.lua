@@ -242,13 +242,13 @@ function create_config( )
     help_text = [[
 Commands list :
 
-!kick [username|id]
+!sik [username|id]
 اخراج موقت از گروه
 
-!ban [ username|id]
+!siktir [ username|id]
 اخراج داعم از گروه
 
-!unban [id]
+!unsiktir [id]
 از اخراج داعم درآوردن 
 
 !who
@@ -263,7 +263,7 @@ Commands list :
 !demote [username]
 تبدیل مدیر به ممبر
 
-!kickme
+!sikme
 لفت از گروه
 
 !about
@@ -284,66 +284,43 @@ Commands list :
 !help
 
 !lock [member|name|bots]
-Locks [member|name|bots] 
 
 !unlock [member|name|photo|bots]
-Unlocks [member|name|photo|bots]
 
 !set rules <text>
-Set <text> as rules
 
 !set about <text>
-Set <text> as about
 
 !settings
-Returns group settings
 
 !newlink
-create/revoke your group link
+ساخت لینک
 
 !link
-returns group link
+گرفتن لینک
 
 !owner
-returns group owner id
 
 !setowner [id]
-Will set id as owner
 
-!setflood [value]
-Set [value] as flood sensitivity
+!setflood [عدد]
 
 !stats
-Simple message statistics
 
 !save [value] <text>
-Save <text> as [value]
 
 !get [value]
-Returns text of [value]
 
 !clean [modlist|rules|about]
-Will clear [modlist|rules|about] and set it to nil
 
 !res [username]
-returns user id
-"!res @username"
 
 !log
-will return group logs
 
-!banlist
-will return group ban list
+!siktirlist
+
 
 **U can use both "/" and "!" 
-
-
-*Only owner and mods can add bots in group
-
-
-*Only moderators and owner can use kick,ban,unban,newlink,link,setphoto,setname,lock,unlock,set rules,set about and settings commands
-
-*Only owner can use res,setowner,promote,demote and log commands
 
 
 درصورت داشتن هر گونه مشکل لینک گروه خود را برای سودو ها ارسال کنید
