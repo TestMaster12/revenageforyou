@@ -236,7 +236,8 @@ function create_config( )
     
     best manager for ever 
     
-    بات کاملا شخصی شده و گروه ها محدود 
+   
+   :) بات کاملا شخصی شده و گروه ها محدود 
 ]],
     help_text = [[
 Commands list :
