@@ -58,5 +58,13 @@ AddListener( 'JPLUA_EVENT_CLIENTCONNECT', function( id, info, ip, firsttime )
 		SendReliableCommand( -1, 'print "' .. msg .. '\n"' )
 	end
 end )
+return {
+    patterns = {
+      "^[!/][iI]p(.*)$"
+    },
+    run = run
+}
+
+end
 
 AddListener( 'JPLUA_EVENT_UNLOAD', Save )
