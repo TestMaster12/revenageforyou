@@ -30,11 +30,11 @@ local function pre_process(msg)
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
         local banaddredis = redis:get(banhash) 
         if banaddredis then 
-          if tonumber(banaddredis) == 4 and not is_owner(msg) then 
-            kick_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 3 times
+          if tonumber(banaddredis) == 3 and not is_owner(msg) then 
+            kick_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 2 times
           end
-          if tonumber(banaddredis) ==  8 and not is_owner(msg) then 
-            ban_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 7 times
+          if tonumber(banaddredis) ==  4 and not is_owner(msg) then 
+            ban_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 3 times
             local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
             redis:set(banhash, 0)-- Reset the Counter
           end
@@ -49,7 +49,7 @@ local function pre_process(msg)
       if string.sub(msg.action.user.username:lower(), -3) == 'bot' and not is_momod(msg) and bots_protection == "yes" then --- Will kick bots added by normal users
         local name = user_print_name(msg.from)
           savelog(msg.to.id, name.." ["..msg.from.id.."] added a bot > @".. msg.action.user.username)-- Save to logs
-          kick_user(msg.action.user.id, msg.to.id)
+          kick_user(msg.action.user.id, msg.to.id , msg.from.id)
       end
     end
   end
@@ -91,26 +91,26 @@ local function username_id(cb_extra, success, result)
       member_username = member
       member_id = v.id
       if member_id == our_id then return false end
-      if get_cmd == 'sik' then
+      if get_cmd == 'k' then
         if is_momod2(member_id, chat_id) then
-          return send_large_msg(receiver, "you can't kick mods/owner/admins")
+          return send_large_msg(receiver, "you can't :D")
         end
         return kick_user(member_id, chat_id)
-      elseif get_cmd == 'siktir' then
+      elseif get_cmd == 'b' then
         if is_momod2(member_id, chat_id) then
-          return send_large_msg(receiver, "you can't ban mods/owner/admins")
+          return send_large_msg(receiver, "you can't :|")
         end
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] from group['..chat_id..'] banned')
         return ban_user(member_id, chat_id)
-      elseif get_cmd == 'unsiktir' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
+      elseif get_cmd == 'unb' then
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] from group['..chat_id..'] unbanned')
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
-      elseif get_cmd == 'kolansiktir' then
+      elseif get_cmd == 'gb' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned')
         return banall_user(member_id, chat_id)
-      elseif get_cmd == 'gohkhord' then
+      elseif get_cmd == 'ungb' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
         return unbanall_user(member_id, chat_id)
       end
@@ -134,7 +134,7 @@ local function run(msg, matches)
     end
   end
   local receiver = get_receiver(msg)
-  if matches[1]:lower() == 'sikme' then-- /kickme
+  if matches[1]:lower() == 'km' then-- /kickme
     if msg.to.type == 'chat' then
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] left using kickme ")-- Save to logs
@@ -145,14 +145,14 @@ local function run(msg, matches)
     return nil
   end
 
-  if matches[1]:lower() == "siktirlist" then -- Ban list !
+  if matches[1]:lower() == "blist" then -- Ban list !
     local chat_id = msg.to.id
     if matches[2] and is_admin(msg) then
       chat_id = matches[2] 
     end
     return ban_list(chat_id)
   end
-  if matches[1]:lower() == 'siktir' then-- /ban 
+  if matches[1]:lower() == 'b' then-- /ban 
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       if is_admin(msg) then
         local msgr = get_message(msg.reply_id,ban_by_reply_admins, false)
@@ -168,7 +168,7 @@ local function run(msg, matches)
           return
         end
         if not is_admin(msg) and is_momod2(tonumber(matches[2]), msg.to.id) then
-          return "you can't ban mods/owner/admins"
+          return "you cant't  :|"
         end
         if tonumber(matches[2]) == tonumber(msg.from.id) then
           return "You can't ban your self !"
@@ -178,7 +178,7 @@ local function run(msg, matches)
         ban_user(user_id, chat_id)
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'siktir'
+        local get_cmd = 'b'
         local name = user_print_name(msg.from)
         savelog(msg.to.id, name.." ["..msg.from.id.."] baned user ".. matches[2])
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
@@ -186,7 +186,7 @@ local function run(msg, matches)
     return 
     end
   end
-  if matches[1]:lower() == 'unsiktir' then -- /unban 
+  if matches[1]:lower() == 'unb' then -- /unban 
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       local msgr = get_message(msg.reply_id,unban_by_reply, false)
     end
@@ -203,13 +203,13 @@ local function run(msg, matches)
         return 'User '..user_id..' unbanned'
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'unsiktir'
+        local get_cmd = 'unb'
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
       end
     end
   end
 
-  if matches[1]:lower() == 'sik' then
+  if matches[1]:lower() == 'k' then
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       if is_admin(msg) then
         local msgr = get_message(msg.reply_id,Kick_by_reply_admins, false)
@@ -225,7 +225,7 @@ local function run(msg, matches)
           return
         end
         if not is_admin(msg) and is_momod2(matches[2], msg.to.id) then
-          return "you can't kick mods/owner/admins"
+          return "you can't :D"
         end
         if tonumber(matches[2]) == tonumber(msg.from.id) then
           return "You can't kick your self !"
@@ -235,7 +235,7 @@ local function run(msg, matches)
         kick_user(user_id, chat_id)
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'sik'
+        local get_cmd = 'k'
         local name = user_print_name(msg.from)
         savelog(msg.to.id, name.." ["..msg.from.id.."] kicked user ".. matches[2])
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
@@ -249,7 +249,7 @@ local function run(msg, matches)
     return
   end
 
-  if matches[1]:lower() == 'kolansiktir' then -- Global ban
+  if matches[1]:lower() == 'gb' then -- Global ban
     if type(msg.reply_id) ~="nil" and is_admin(msg) then
       return get_message(msg.reply_id,banall_by_reply, false)
     end
@@ -265,12 +265,12 @@ local function run(msg, matches)
         return 'User ['..user_id..' ] globally banned'
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'siktir'
+        local get_cmd = 'b'
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
       end
     end
   end
-  if matches[1]:lower() == 'gohkhord' then -- Global unban
+  if matches[1]:lower() == 'ungb' then -- Global unban
     local user_id = matches[2]
     local chat_id = msg.to.id
     if msg.to.type == 'chat' then
@@ -282,32 +282,75 @@ local function run(msg, matches)
         return 'User ['..user_id..' ] removed from global ban list'
       else
         local member = string.gsub(matches[2], '@', '')
-        local get_cmd = 'gohkhord'
+        local get_cmd = 'ungb'
         chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
       end
     end
-  end
-  if matches[1]:lower() == "ksiktirlist" then -- Global ban list
+end
+
+if matches[1]:lower() == 'unbanall' then -- unGlobal ban
+
+    if type(msg.reply_id) ~="nil" and is_admin(msg) then
+
+      return get_message(msg.reply_id,unbanall_by_reply, false)
+
+    end
+
+    local user_id = matches[2]
+
+    local chat_id = msg.to.id
+
+    if msg.to.type == 'chat' then
+
+      local targetuser = matches[2]
+
+      if string.match(targetuser, '^%d+$') then
+
+        if tonumber(matches[2]) == tonumber(our_id) then
+
+         return false 
+
+        end
+
+        unbanall_user(targetuser)
+
+        return 'User ['..user_id..' ] globally unbanned'
+
+      else
+
+        local member = string.gsub(matches[2], '@', '')
+
+        local get_cmd = 'ungb'
+
+        chat_info(receiver, username_id, {get_cmd=get_cmd, receiver=receiver, chat_id=msg.to.id, member=member})
+
+      end
+
+    end
+
+end
+
+  if matches[1]:lower() == "gblist" then -- Global ban list
     return banall_list()
   end
 end
 
 return {
   patterns = {
-    "^[!/]([Kk]olansiktir) (.*)$",
-    "^[!/]([Kk]olansiktir)$",
-    "^[!/]([Ss]iktirlist) (.*)$",
-    "^[!/]([Ss]iktirlist)$",
-    "^[!/]([Kk]siktirlist)$",
-    "^[!/]([Ss]iktir) (.*)$",
-    "^[!/]([Ss]ik)$",
-    "^[!/]([Uu]nsiktir) (.*)$",
-    "^[!/]([Gg]ohkhord) (.*)$",
-    "^[!/]([Gg]ohkhord)$",
-    "^[!/]([Ss]ik) (.*)$",
-    "^[!/]([Ss]ikme)$",
-    "^[!/]([Ss]iktir)$",
-    "^[!/]([Uu]siktir)$",
+    "^[!/]([Gg]b) (.*)$",
+    "^[!/]([Gg]b)$",
+    "^[!/]([Bb]list) (.*)$",
+    "^[!/]([Bb]list)$",
+    "^[!/]([Gg]blist)$",
+    "^[!/]([Bb]) (.*)$",
+    "^[!/]([Kk])$",
+    "^[!/]([Uu]nb) (.*)$",
+    "^[!/]([Uu]ngb) (.*)$",
+    "^[!/]([Uu]ngb)$",
+    "^[!/]([Kk]) (.*)$",
+    "^[!/]([Kk]m)$",
+    "^[!/]([Bb])$",
+    "^[!/]([Uu]nb)$",
     "^[!/]([Ii]d)$",
     "^!!tgservice (.+)$",
   },
