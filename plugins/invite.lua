@@ -20,12 +20,12 @@ function run(msg, matches)
   if msg.to.type ~= 'chat' then 
     return
   end
-  if not is_sudo(msg) then
-    return
+  --if not is_admin(msg) then
+    --return
+ -- end
+  if not is_admin(msg) then -- For admins only !
+    return 'Only admins can invite.'
   end
-  --if not is_admin(msg) then -- For admins only !
-    --return 'Only admins can invite.'
-  --end
 	local cbres_extra = {chatid = msg.to.id}
   local username = matches[1]
   local username = username:gsub("@","")
@@ -33,7 +33,7 @@ function run(msg, matches)
 end
 return {
     patterns = {
-      "^[!/]:) (.*)$"
+      "^[!/]inv (.*)$"
     },
     run = run
 }
