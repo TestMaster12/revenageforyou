@@ -206,7 +206,7 @@ function create_config( )
     enabled_plugins = {
      "all",
     "anti_spam",
-    "antilinks",
+    "adds_lock",
     "arabic_lock",
     "banhammer",
     "blocks",
