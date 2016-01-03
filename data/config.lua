@@ -1,20 +1,6 @@
 do local _ = {
-  about_text = " 615 v.3
-    sudo's
-    @dawsh_alfred
-    @mdsbr
-    
-    special tnx :
-    
-    @Wilson_developer (admin)
-    
-    best manager for ever 
-    
-    
-   گروه فروخته میشود",
-  disabled_channels = {},
-  enabled_plugins = {
-    "all",
+ enabled_plugins = {
+     "all",
     "anti_spam",
     "antilinks",
     "arabic_lock",
@@ -44,8 +30,28 @@ do local _ = {
    "unblocks",  
     "versions",
      "xy",
-  },
-  help_text = "Commands list :
+    },
+  sudo_users = {157171928,143194478},--Sudo users
+    disabled_channels = {},
+    realm = {58062204},--Realms Id
+    moderation = {data = 'data/moderation.json'},
+    about_text = [[
+    615 v.3
+    sudo's
+    @dawsh_alfred
+    @mdsbr
+    
+    special tnx :
+    
+    @Wilson_developer (admin)
+    
+    best manager for ever 
+    
+    
+   گروه فروخته میشود
+]],
+    help_text = [[
+Commands list :
 !k [username|id]
 اخراج موقت از گروه
 kick
@@ -132,15 +138,7 @@ _________________________
 !615
 _________________________
 ]]
-  moderation = {
-    data = "data/moderation.json"
-  },
-  realm = {
-    58062204
-  },
-  sudo_users = {
-    157171928,143194478
-  }
+
 }
 return _
 end
