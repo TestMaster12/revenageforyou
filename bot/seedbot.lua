@@ -222,7 +222,7 @@ function create_config( )
     "inrealm",
     "invite",
     "ip",
-    "isup"
+    "isup",
    "onservice",
     "owners",
     "plugins",
