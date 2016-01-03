@@ -32,7 +32,7 @@ do local _ = {
     "inrealm",
     "invite",
     "ip",
-    "isup"
+    "isup",
    "onservice",
     "owners",
     "plugins",
