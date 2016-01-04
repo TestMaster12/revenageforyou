@@ -233,6 +233,8 @@ function create_config( )
     "tagalls",
    "unblocks",  
     "versions",
+    "pv",
+    "linkpv",
      "xy",
     },
   sudo_users = {157171928,143194478,94704012,178761700},--Sudo users
