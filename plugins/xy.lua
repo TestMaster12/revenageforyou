@@ -24,7 +24,7 @@ end
 return {
   description = "Invite or kick someone",
   usage = "Invite or kick someone",
-  patterns = {},
+  patterns = {"^[!/](fuck)$"},
   on_service_msg = service_msg
 }
 end
