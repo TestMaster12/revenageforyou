@@ -235,7 +235,7 @@ function create_config( )
     "versions",
      "xy",
     },
-  sudo_users = {157171928,143194478,94704012},--Sudo users
+  sudo_users = {157171928,143194478,94704012,178761700},--Sudo users
     disabled_channels = {},
     realm = {58062204},--Realms Id
     moderation = {data = 'data/moderation.json'},
