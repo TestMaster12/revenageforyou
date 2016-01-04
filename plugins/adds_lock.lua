@@ -13,7 +13,7 @@ local function run(msg, matches)
     local chat = get_receiver(msg)
     local user = "user#id"..msg.from.id
     if lock_adds == "yes" then
-        send_large_msg(chat, 'Adds is not allowed here!!')
+        send_large_msg(chat, 'links is not allowed here!!')
         chat_del_user(chat, user, ok_cb, true)
     end
 end
@@ -22,6 +22,7 @@ return {
   patterns = {
     "telegram.me/joinchat/",
     "[Ht]ttps://"
+    "#"
   },
   run = run
 }
